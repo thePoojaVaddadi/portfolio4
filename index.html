@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pooja | Elegant Dark Aurora Portfolio</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-1: #05050a;
+      --bg-2: #06030a;
+      --accent-teal: #38c6d6;
+      --accent-violet: #9b6cff;
+      --card-bg: rgba(255,255,255,0.02);
+      --card-border: rgba(255,255,255,0.04);
+    }
+    html,body{height:100%;}
+    body{font-family:'Work Sans',system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg-1); color:#e8eef6; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+    .heading{font-family:'Playfair Display', serif;}
+    /* glass */
+    .glass { background: var(--card-bg); border: 1px solid var(--card-border); backdrop-filter: blur(8px); }
+    /* card-border helper (fixed) */
+    .card-border { border: 1px solid var(--card-border); }
+    /* subtle aurora blend overlay on elements */
+    .aurora-accent { background: linear-gradient(90deg, var(--accent-teal), var(--accent-violet)); -webkit-background-clip: text; background-clip:text; color: transparent; }
+    /* progress bar */
+    #progress { position: fixed; top:0; left:0; height:3px; width:0%; z-index:80; transition: width 0.12s linear, background 0.2s; }
+    /* canvas sits behind content */
+    #auroraCanvas{ position: fixed; inset:0; z-index:-20; pointer-events:none; display:block; }
+    /* section fade-in */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 420ms ease, transform 420ms ease; will-change: opacity, transform; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* responsive tweaks */
+    header nav button{ background: transparent; border: none; color: inherit; cursor: pointer; }
+    /* small helpers */
+    .muted { color: rgba(232,238,246,0.6); }
+    .small { font-size: 0.9rem; }
+    footer p{ color: rgba(232,238,246,0.55); }
+    /* ensure focus outline is subtle */
+    :focus { outline: 2px solid rgba(155,108,255,0.12); outline-offset: 2px; }
+    /* ensure anchors/buttons are accessible on mobile (enlarge touch area) */
+    .touch { padding: 9px 12px; border-radius:8px; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- top progress bar -->
+  <div id="progress" style="background:linear-gradient(90deg,var(--accent-teal),var(--accent-violet));"></div>
+
+  <!-- aurora canvas -->
+  <canvas id="auroraCanvas" aria-hidden="true"></canvas>
+
+  <!-- Navigation -->
+  <header class="fixed top-0 w-full z-50 bg-transparent">
+    <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="#home" class="text-2xl heading font-bold aurora-accent">Pooja</a>
+      </div>
+      <div class="hidden md:flex items-center gap-6 text-sm muted">
+        <button data-target="home" class="hover:opacity-90">Home</button>
+        <button data-target="about" class="hover:opacity-90">About</button>
+        <button data-target="skills" class="hover:opacity-90">Skills</button>
+        <button data-target="projects" class="hover:opacity-90">Projects</button>
+        <button data-target="experience" class="hover:opacity-90">Experience</button>
+        <button data-target="contact" class="hover:opacity-90">Contact</button>
+      </div>
+      <div class="md:hidden">
+        <button id="mobile-toggle" aria-label="menu" class="px-2 py-1 small muted touch">Menu</button>
+      </div>
+    </nav>
+    <!-- mobile menu -->
+    <div id="mobile-menu" class="hidden bg-black/50 backdrop-blur-sm">
+      <div class="px-4 py-4 flex flex-col gap-2">
+        <button data-target="home" class="text-left touch">Home</button>
+        <button data-target="about" class="text-left touch">About</button>
+        <button data-target="skills" class="text-left touch">Skills</button>
+        <button data-target="projects" class="text-left touch">Projects</button>
+        <button data-target="experience" class="text-left touch">Experience</button>
+        <button data-target="contact" class="text-left touch">Contact</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="pt-24">
+
+    <!-- Hero / Home -->
+    <section id="home" class="min-h-screen flex items-center justify-center px-6 py-12">
+      <div class="max-w-5xl mx-auto text-center reveal">
+        <div class="mb-6">
+          <div class="mx-auto w-36 h-36 rounded-full flex items-center justify-center glass text-4xl font-bold heading" style="background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03));">PV</div>
+        </div>
+        <h1 class="text-3xl md:text-5xl font-bold heading mb-4">Vaddadi Veera Venkata Lakhsmi Pooja</h1>
+        <p class="muted max-w-2xl mx-auto small">I build thoughtful software and intelligent systems — crafting elegant experiences that solve real problems. My work blends practicality with curiosity, bringing clarity to complex challenges.</p>
+
+        <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="glass card-border rounded-lg p-5 text-center">
+            <p class="text-xl font-semibold">10+</p>
+            <p class="muted small">Projects Completed</p>
+          </div>
+          <div class="glass card-border rounded-lg p-5 text-center">
+            <p class="text-xl font-semibold">20+</p>
+            <p class="muted small">Technologies</p>
+          </div>
+          <div class="glass card-border rounded-lg p-5 text-center">
+            <p class="text-xl font-semibold">700+</p>
+            <p class="muted small">Hackathon Participants</p>
+          </div>
+          <div class="glass card-border rounded-lg p-5 text-center">
+            <p class="text-xl font-semibold">∞</p>
+            <p class="muted small">Coffee Consumed</p>
+          </div>
+        </div>
+
+        <div class="mt-10 flex justify-center gap-4">
+          <a href="https://github.com/thePoojaVaddadi" target="_blank" class="px-4 py-2 rounded-md glass small touch">GitHub</a>
+          <a href="https://www.linkedin.com/in/pooja-vaddadi-makeithuman/" target="_blank" class="px-4 py-2 rounded-md glass small touch">LinkedIn</a>
+          <a href="mailto:newtonnindian95@gmail.com" class="px-4 py-2 rounded-md glass small touch">Email</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="min-h-screen flex items-center justify-center px-6 py-12">
+      <div class="max-w-4xl mx-auto reveal">
+        <h2 class="text-2xl heading font-bold mb-6 aurora-accent">A Bit About Me</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="glass card-border rounded-lg p-6">
+            <h3 class="font-semibold mb-2">Education</h3>
+            <p class="muted small"><strong>Manipal University Jaipur</strong><br>B.Tech. Computer Science — 2021–2025<br>CGPA: 7.01/10</p>
+            <div class="mt-4">
+              <p class="font-semibold mb-1">Aditya Talent School</p>
+              <p class="muted small">12th Grade: 90% · 10th Grade: 100%</p>
+            </div>
+          </div>
+          <div class="glass card-border rounded-lg p-6">
+            <h3 class="font-semibold mb-2">Achievements</h3>
+            <ul class="muted small list-disc list-inside space-y-2">
+              <li>Dean's List of Excellence (1st Year)</li>
+              <li>JEE MAINS: 89.88 percentile</li>
+              <li>IEEE Head of Promotions — 700+ hackathon participants</li>
+              <li>Featured in newspaper for academic excellence</li>
+              <li>Postman Certification — 98/100</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-6 glass card-border rounded-lg p-4 flex items-center gap-4">
+          <svg width="18" height="18" class="muted" aria-hidden="true"><use href="#icon-map"></use></svg>
+          <span class="muted small">Kakinada, Andhra Pradesh, India</span>
+          <svg width="18" height="18" class="muted ml-6" aria-hidden="true"><use href="#icon-phone"></use></svg>
+          <span class="muted small">+91-9398333977</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="min-h-screen flex items-center justify-center px-6 py-12">
+      <div class="max-w-6xl mx-auto reveal">
+        <h2 class="text-2xl heading font-bold mb-6 aurora-accent">Skills & Technologies</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass card-border rounded-lg p-6">
+            <h3 class="font-semibold mb-3">Languages</h3>
+            <p class="muted small">C · Java · JavaScript · Python · Kotlin · HTML · CSS · XML</p>
+          </div>
+          <div class="glass card-border rounded-lg p-6">
+            <h3 class="font-semibold mb-3">Frameworks & Tools</h3>
+            <p class="muted small">React · Node.js · Express · TensorFlow · PyTorch · Android Studio · Postman · Git · OpenCV</p>
+          </div>
+          <div class="glass card-border rounded-lg p-6">
+            <h3 class="font-semibold mb-3">Concepts</h3>
+            <p class="muted small">DSA · AI/ML · Web & App Development · Cloud Security · CI/CD</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="min-h-screen flex items-center justify-center px-6 py-12">
+      <div class="max-w-6xl mx-auto reveal">
+        <h2 class="text-2xl heading font-bold mb-6 aurora-accent">Selected Projects</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="glass card-border rounded-lg p-6">
+            <h3 class="font-semibold mb-2">Generative Pre-trained Transformer (GPT)</h3>
+            <p class="muted small mb-3">Built a transformer-based language model with multi-head attention and autoregressive generation. Implemented efficient training pipelines using PyTorch.</p>
+            <p class="small"><strong>Tech:</strong> Python · PyTorch · NLP</p>
+          </div>
+
+          <div class="glass card-border rounded-lg p-6">
+            <h3 class="font-semibold mb-2">PoojaNote – Note Taking App</h3>
+            <p class="muted small mb-3">Android application for structured note-taking with folder organization, search, and synchronization features.</p>
+            <p class="small"><strong>Tech:</strong> Kotlin · Android Studio</p>
+          </div>
+
+          <div class="glass card-border rounded-lg p-6">
+            <h3 class="font-semibold mb-2">Facial Emotion Detector</h3>
+            <p class="muted small mb-3">Real-time emotion recognition using convolutional neural networks and TensorFlow for robust inference across expressions.</p>
+            <p class="small"><strong>Tech:</strong> CNN · TensorFlow</p>
+          </div>
+
+          <div class="glass card-border rounded-lg p-6">
+            <h3 class="font-semibold mb-2">Attendance / Face Monitoring System</h3>
+            <p class="muted small mb-3">Database-backed attendance system leveraging OpenCV for facial recognition and tracking.</p>
+            <p class="small"><strong>Tech:</strong> OpenCV · Python · Databases</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="min-h-screen flex items-center justify-center px-6 py-12">
+      <div class="max-w-4xl mx-auto reveal">
+        <h2 class="text-2xl heading font-bold mb-6 aurora-accent">Experience</h2>
+        <div class="glass card-border rounded-lg p-6">
+          <h3 class="font-semibold mb-1">Software Engineering Intern — Spark Software Solutions</h3>
+          <p class="muted small mb-2">Apr 2024 – May 2024 · Academics / Research</p>
+          <p class="muted small">Contributed to frontend and backend features for a delivery web application, implemented unit tests, and participated in CI/CD setup.</p>
+        </div>
+
+        <div class="mt-6 glass card-border rounded-lg p-6">
+          <h3 class="font-semibold mb-1">Research Publication</h3>
+          <p class="muted small mb-2">Artificial Intelligence in Cyberbullying — Published March 2023</p>
+          <p class="muted small">Survey-based study exploring AI approaches to detecting and mitigating online abuse, emphasizing interdisciplinary solutions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="min-h-screen flex items-center justify-center px-6 py-12">
+      <div class="max-w-4xl mx-auto text-center reveal">
+        <h2 class="text-2xl heading font-bold mb-4 aurora-accent">Let's Connect</h2>
+        <p class="muted small mb-6">If you have a project, collaboration idea, or just want to say hello, reach out — I enjoy meaningful conversations about technology and design.</p>
+        <div class="flex flex-col md:flex-row justify-center gap-4">
+          <a href="mailto:newtonnindian95@gmail.com" class="px-6 py-3 rounded-md glass small touch">Email</a>
+          <a href="tel:+919398333977" class="px-6 py-3 rounded-md glass small touch">Call</a>
+        </div>
+        <div class="mt-8 flex justify-center gap-6">
+          <a href="https://github.com/thePoojaVaddadi" target="_blank" class="muted">GitHub</a>
+          <a href="https://www.linkedin.com/in/pooja-vaddadi-makeithuman/" target="_blank" class="muted">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="py-8">
+    <div class="max-w-6xl mx-auto text-center">
+      <p class="small muted">© 2024 Vaddadi Veera Venkata Lakhsmi Pooja — Crafted with care.</p>
+    </div>
+  </footer>
+
+  <!-- Embedded simple SVG icons -->
+  <svg style="display:none;">
+    <symbol id="icon-map" viewBox="0 0 24 24"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></symbol>
+    <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M22 17.92v3.58a1 1 0 0 1-1.11 1A19 19 0 0 1 3.09 4.11 1 1 0 0 1 4.1 3H7.7a1 1 0 0 1 1 .75c.12.7.36 1.37.71 2l-.94.94a1 1 0 0 0-.24 1.06c.5 1 1.3 2.86 3.36 4.92s3.92 2.86 4.92 3.36a1 1 0 0 0 1.06-.24l.94-.94c.63.35 1.3.59 2 .71a1 1 0 0 1 .75 1z"/></symbol>
+  </svg>
+
+  <script src="script.js"></script>
+</body>
+</html>
